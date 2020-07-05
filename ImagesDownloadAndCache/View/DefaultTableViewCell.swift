@@ -38,6 +38,7 @@ class DefaultTableViewCell: UITableViewCell {
   
   private let imageURLLink : UIImageView = {
     let imgView = UIImageView()
+    imgView.width(constant: 90)
     imgView.contentMode = .scaleAspectFit
     imgView.clipsToBounds = true
     return imgView
@@ -45,11 +46,10 @@ class DefaultTableViewCell: UITableViewCell {
   
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
+  
+    addSubview(imageURLLink)
     
-    let stackViewImg = UIStackView(arrangedSubviews: [imageURLLink])
-    stackViewImg.translatesAutoresizingMaskIntoConstraints = false
-    stackViewImg.distribution = .fillProportionally
-    addSubview(stackViewImg)
+    imageURLLink.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: nil, padding: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10), size: CGSize(width: 0, height: 0))
     
     let stackView = UIStackView(arrangedSubviews: [lblTitle,lblDescriptions])
     stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -57,15 +57,8 @@ class DefaultTableViewCell: UITableViewCell {
     stackView.axis = .vertical
     stackView.spacing = 5
     addSubview(stackView)
-    
-    let mainStackView = UIStackView(arrangedSubviews: [stackViewImg,stackView])
-    mainStackView.translatesAutoresizingMaskIntoConstraints = false
-    mainStackView.distribution = .fillEqually
-    mainStackView.axis = .horizontal
-    mainStackView.spacing = 5
-    addSubview(mainStackView)
-    
-    mainStackView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10), size: CGSize(width: 0, height: 0))
+  
+    stackView.anchor(top: topAnchor, leading: imageURLLink.trailingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10), size: CGSize(width: 0, height: 0))
     
     self.layoutIfNeeded()
   }

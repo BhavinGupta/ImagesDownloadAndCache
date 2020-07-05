@@ -80,13 +80,19 @@ extension DefaultTableVC {
     return UITableView.automaticDimension
   }
   
-  override func tableView(_ tableView: UITableView,
-                          cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView,
+                            cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+      let cell = tableView.dequeueReusableCell(withIdentifier: cellId,
+                                               for: indexPath) as! DefaultTableViewCell
+  
+      let rowModel = self.rows[indexPath.row]
+      cell.rows = rowModel
+      return cell
+    }
+  
+  override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
     let cell = tableView.dequeueReusableCell(withIdentifier: cellId,
                                              for: indexPath) as! DefaultTableViewCell
-    
-    let rowModel = self.rows[indexPath.row]
-    cell.rows = rowModel
-    return cell
+    cell.layoutIfNeeded()
   }
 }
